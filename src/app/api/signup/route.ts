@@ -78,7 +78,7 @@ export async function POST(request:NextRequest){
         console.log('error while signingup',error?.message);
         return NextResponse.json({
             success:false,
-            message:"error while signing up"
+            message:"error while signing up , "+error.message
         },{status:400})
     }
 }
