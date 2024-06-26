@@ -8,6 +8,7 @@ export async function POST(request:NextRequest) {
     try {
         const username = request.nextUrl.searchParams.get('username');
         const code = request.nextUrl.searchParams.get('code');
+        console.log(code , username)
         const decodedUsername = decodeURIComponent(username!)
 
         const user = await UserModel.findOne({username:decodedUsername})

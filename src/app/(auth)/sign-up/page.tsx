@@ -64,6 +64,7 @@ function page() {
       title: 'Success',
       description: res.data.message,
      })
+     console.log(username)
      router.push(`/verify/${username}`)
      setIsSubmitting(false)
     } catch (error:any) {
