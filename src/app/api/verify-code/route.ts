@@ -6,9 +6,9 @@ export async function POST(request:NextRequest) {
     await dbConnection();
 
     try {
-        const {username,code} = await request.json()
-
-        const decodedUsername = decodeURIComponent(username)
+        const username = request.nextUrl.searchParams.get('username');
+        const code = request.nextUrl.searchParams.get('code');
+        const decodedUsername = decodeURIComponent(username!)
 
         const user = await UserModel.findOne({username:decodedUsername})
 
