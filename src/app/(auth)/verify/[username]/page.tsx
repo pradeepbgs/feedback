@@ -18,29 +18,32 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Loader2 } from 'lucide-react';
 
 const VerificationForm = () => {
   const router = useRouter()
   const {username} = useParams()
   const {toast} = useToast()
+  const [isLoading,setIsLoading] = useState(false)
 
 
   const form = useForm<z.infer<typeof verifySchema>>({
     resolver: zodResolver(verifySchema),
-    defaultValues:{
-      
-    }
   })
   const onSubmit = async (data:z.infer<typeof verifySchema>) => {
+    setIsLoading(true)
     try {
       const code = data.code;
+      console.log(code , username)
       const response = await axios.post(`/api/verify-code?username=${username}&code=${code}`);
       toast({
         title: 'Success',
         description: response.data.message,
       });
       router.push('/sign-in')
+      setIsLoading(false)
     } catch (error:any) {
+      setIsLoading(false)
       console.error('Verification Error:', error);
       const axiosError = error as AxiosError<apiResponse>;
       toast({
@@ -79,7 +82,9 @@ const VerificationForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">
+        {isLoading ? (<Loader2 />) : 'Verify'}
+        </Button>
       </form>
     </Form>
       </div>

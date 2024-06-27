@@ -56,6 +56,7 @@ function page() {
     checkUsernameUniqueness()
   },[username])
 
+  console.log(username)
   const onSubmit = async (data:z.infer<typeof signupSchema>) => {
     setIsSubmitting(true)
     try {
@@ -64,7 +65,6 @@ function page() {
       title: 'Success',
       description: res.data.message,
      })
-     console.log(username)
      router.push(`/verify/${username}`)
      setIsSubmitting(false)
     } catch (error:any) {
@@ -138,10 +138,6 @@ function page() {
                 <Input type="password" 
                 placeholder='Password'
                 {...field} 
-                onChange={(e) => {
-                  field.onChange(e)
-                  debounced(e.target.value)
-                }}
                 />
                 <FormMessage />
               </FormItem>
