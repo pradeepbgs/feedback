@@ -7,7 +7,10 @@ import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 
 export async function DELETE(request: NextRequest) {
-    const { message_id } = await request.json()
+    // const { message_id } = await request.json()
+    const message_id = request.nextUrl.searchParams.get('message_id');
+      console.log(message_id)
+
     if (!message_id) {
         return NextResponse.json(
             {
@@ -39,6 +42,7 @@ export async function DELETE(request: NextRequest) {
             { _id: user_id },
             { $pull: { messages: { _id: message_id } } }
         )
+        console.log(updatedResult)
         if (updatedResult.modifiedCount === 0) {
             return NextResponse.json(
                 {
