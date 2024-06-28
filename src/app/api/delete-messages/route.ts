@@ -62,7 +62,7 @@ export async function DELETE(request: NextRequest) {
         return NextResponse.json(
             {
                 success: false,
-                message: "failed to delete message"
+                message: error.message ?? "failed to delete message"
             },
             { status: 500 }
         );

@@ -110,7 +110,7 @@ function DashBoardPage() {
   if (!session ?? !session?.user){
     return (
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
         <p>please login</p>
       </div>
     )

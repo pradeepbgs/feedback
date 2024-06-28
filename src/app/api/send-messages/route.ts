@@ -7,6 +7,7 @@ export async function POST(request:NextRequest) {
     await dbConnection();
 
     const {username,message} = await request.json();
+    console.log(username,message);
 
     if(!message || !username){
         return NextResponse.json(
