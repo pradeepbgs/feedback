@@ -56,7 +56,6 @@ function SignUpPage() {
     checkUsernameUniqueness()
   },[username])
 
-  console.log(username)
   const onSubmit = async (data:z.infer<typeof signupSchema>) => {
     setIsSubmitting(true)
     try {

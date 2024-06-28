@@ -4,8 +4,9 @@ import { UserModel} from "@/models/user.model";
 import { AuthOptions } from "../auth/[...nextauth]/options";
 import { User } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { acceptMessageSchema } from "@/schema/acceptMessageSchema";
 
-export async function POSt(request:NextRequest) {
+export async function POST(request:NextRequest) {
     await dbConnection();
     const session = await getServerSession(AuthOptions);
 

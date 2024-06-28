@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
 import { signinSchema } from '@/schema/signinSchema'
 import { signIn } from 'next-auth/react'
+import Navbar from '@/components/Navbar'
 
 
 function Signpage() {
@@ -83,7 +84,7 @@ function Signpage() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+              />
             <FormField
               name="password"
               control={form.control}
@@ -94,7 +95,7 @@ function Signpage() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+              />
             <Button className='w-full' type="submit">
               {isSubmitting ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

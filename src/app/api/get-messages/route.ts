@@ -10,7 +10,6 @@ export async function GET(request:NextRequest) {
     await dbConnection();
     const session = await getServerSession(AuthOptions)
     const user:User = session?.user as User
-
     if(!session || !session?.user){
         return NextResponse.json(
             {
@@ -21,15 +20,15 @@ export async function GET(request:NextRequest) {
         );
     }
 
-    const user_id = new mongoose.Types.ObjectId(user._id)
-
+    const user_id = new mongoose.Types.ObjectId(user?._id)
     try {
         const user = await UserModel.aggregate([
-            { $match: {id:user_id} },
+            { $match: {_id:user_id} },
             {$unwind:'$messages'},
             {$sort:{'messages.createdAt':-1}},
             {$group:{_id:'$_id',messages:{$push:'$messages'}}}
-        ])
+        ]).exec()
+
 
         if(!user){
             return NextResponse.json(
