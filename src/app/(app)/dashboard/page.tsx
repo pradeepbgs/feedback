@@ -1,11 +1,11 @@
 'use client'
 
-import MessageCard from '@/components/MessageCard'
-import Navbar from '@/components/Navbar'
+import {MessageCard} from '@/components/MessageCard'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
 import { useToast } from '@/components/ui/use-toast'
+import { Message } from '@/models/user.model'
 import { acceptMessageSchema } from '@/schema/acceptMessageSchema'
 import { apiResponse } from '@/types/apiResponse'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,13 +17,13 @@ import React, {useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 function DashBoardPage() {
-  const [messages,setMessages] = useState([])
+  const [messages,setMessages] = useState<Message[]>([])
   const [isLoading,setIsLoading] = useState(false)
   const [isSwitchLoading,setIsSwitchLoading] = useState(false)
   const {toast} = useToast()
 
-  const handleDeleteMessage = async (message_id:string) => {
-    setMessages(messages.filter((message:any) => message._id !== message_id))
+  const handleDeleteMessage = async (messageId:string) => {
+    setMessages(messages.filter((message:any) => message._id !== messageId))
   }
 
   const {data:session} = useSession()
@@ -59,7 +59,6 @@ function DashBoardPage() {
 
     try {
       const res = await axios.get<apiResponse>('/api/get-messages');
-      console.log(res.data.messages)
       setMessages(res?.data?.messages ?? [])
       if (refresh) {
         toast({
@@ -177,7 +176,7 @@ function DashBoardPage() {
         {messages.length > 0 ? (
           messages.map((message, index) => (
             <MessageCard
-              key={message?._id}
+              key={message._id}
               message={message}
               onMessageDelete={handleDeleteMessage}
             />

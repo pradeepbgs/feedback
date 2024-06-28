@@ -5,8 +5,6 @@ import React from 'react'
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
@@ -32,22 +30,21 @@ import dayjs from 'dayjs'
   
 type MessageCardProps = {
     message: Message;
-    onMessageDelete: (messageid:string) => void
+    onMessageDelete: (messageId:string) => void
 }
   
-const MessageCard = ({message, onMessageDelete}:MessageCardProps) => {
+export function MessageCard ({message, onMessageDelete}:MessageCardProps) {
     const {toast} = useToast()
 
     const handleDeleteConfirm = async () => {
-      console.log(message)
         try {
-            const response = await axios.delete(
+            const response = await axios.delete<apiResponse>(
                 `/api/delete-messages?message_id=${message?._id}`, 
               );
               toast({
                 title: response.data.message,
               });
-                
+              onMessageDelete(message._id);
         } catch (error:any) {
             const axiosError = error as AxiosError<apiResponse>;
             toast({
@@ -99,4 +96,3 @@ const MessageCard = ({message, onMessageDelete}:MessageCardProps) => {
   )
 } 
 
-export default MessageCard
