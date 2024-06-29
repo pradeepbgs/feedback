@@ -29,8 +29,8 @@ export const AuthOptions:NextAuthOptions = {
 
                      if (!user.isVerified) throw new Error("Please verify your account first")  
 
-                    const decodedPassword =  bcrypt
-                    .compare(credentials.password,user.password)
+                    const decodedPassword = await bcrypt
+                    .compare(String(credentials.password),String(user.password))
 
                     if (decodedPassword){
                         return user
